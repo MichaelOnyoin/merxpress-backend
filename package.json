@@ -13,14 +13,16 @@
     "url": "https://github.com/MichaelOnyoin/merxpress-backend"
   },
   "scripts": {
-    "start": "./bin/app",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.21.2",
     "http-errors": "^2.0.0",
     "pino": "^9.6.0",
     "pino-http": "^10.4.0",
-    "pino-pretty": "^13.0.0"
+    "pino-pretty": "^13.0.0",
+    "sqlite3": "^5.1.7"
   }
 }

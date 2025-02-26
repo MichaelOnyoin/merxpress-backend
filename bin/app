@@ -2,7 +2,38 @@
 'use strict'
 
 // Pass configuration to application
-require('../')({
-  port: 8000,
-  host: 'localhost'
-})
+// require('../')({
+//   port: 8000,
+//   host: 'localhost'
+// })
+
+const express = require('express');
+const app = express();
+const PORT = 5000;
+
+app.use(express.json());
+
+let nextId = 1;
+let todos = [];
+
+function addTodo(text) {
+  const id = nextId++;
+  todos.push({ id, text, done: false });
+  return id;
+}
+
+app.get('/api/todos', (req, res) => {
+  res.status(200).json(todos);
+});
+
+app.post('/api/todo', (req, res) => {
+  if (!req.body || !req.body.text) {
+    return res.status(400).json({ message: 'text field is required' });
+  }
+  const id = addTodo(req.body.text);
+  res.status(200).json({ id, success: true });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
