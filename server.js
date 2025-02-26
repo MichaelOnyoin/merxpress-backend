@@ -1,6 +1,7 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const cors = require("cors");
+//const { Pool } = require('pg');
 
 const app = express();
 const port = 5000;
@@ -14,6 +15,12 @@ const db = new sqlite3.Database(":memory:", (err) => {
     if (err) console.error(err.message);
     console.log("Connected to SQLite database.");
 });
+
+// PostgreSQL connection
+// const pool = new Pool({
+//     connectionString: process.env.DATABASE_URL,
+// });
+
 
 db.serialize(() => {
     db.run(`CREATE TABLE products (
@@ -34,28 +41,8 @@ db.serialize(() => {
 });
 
 
-
-//Create Products Table
-// db.run(`CREATE TABLE IF NOT EXISTS products (
-//         id INTEGER PRIMARY KEY AUTOINCREMENT,
-//         price NUMERIC NOT NULL,
-//         orignalPrice NUMERIC ,
-//         discount NUMERIC,
-//         title TEXT NOT NULL,
-//         description TEXT NOT NULL,
-//         imageUrl VARCHAR(255) NOT NULL)`);
-
 // 🚀 API Endpoints
 
-//Get all Products
-//  db.all("SELECT * FROM products", [], (err, rows) => {
-//     if (err) {
-//         throw err;
-//     }
-//     rows.forEach((row) => {
-//         console.log(row);
-//     });
-// });
 
 app.get("/products", (req, res) => {
     db.all("SELECT * FROM products", [], (err, rows) => {
@@ -111,5 +98,6 @@ app.delete("/products/:id", (req, res) => {
 // });
 // Start the server
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+    
+    console.log(`Server is running on http://localhost:${port} 🚀`);
 });
